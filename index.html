@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>THE MARKET NEVER DIES</title>
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Bebas+Neue&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:#000;color:#fff;font-family:'Share Tech Mono',monospace;overflow-x:hidden;cursor:crosshair}
+body::before{content:'';position:fixed;top:0;left:0;width:100%;height:100%;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.13) 2px,rgba(0,0,0,0.13) 4px);pointer-events:none;z-index:9998}
+#mc{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;opacity:0.15;pointer-events:none}
+
+/* TICKER */
+.tw{position:sticky;top:0;z-index:1000;background:#000;border-bottom:2px solid #00ff41;padding:8px 0;overflow:hidden;white-space:nowrap}
+.tt{display:inline-flex;gap:60px;animation:ticker 30s linear infinite;font-family:'Orbitron',monospace;font-size:11px;letter-spacing:1px}
+.tt:hover{animation-play-state:paused}
+.ti{display:inline-flex;align-items:center;gap:8px}
+.ts{color:#fff;font-weight:700}.tv{color:#00ff41}
+.tc.up{color:#00ff41}.tc.dn{color:#ff0000}
+@keyframes ticker{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+
+/* HERO */
+#hero{position:relative;z-index:10;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 20px;text-align:center}
+.eye{font-family:'Orbitron',monospace;font-size:11px;letter-spacing:6px;color:#00ff41;margin-bottom:24px;animation:fl 3s infinite;min-height:16px}
+@keyframes fl{0%,100%{opacity:1}92%{opacity:1}93%{opacity:.3}94%{opacity:1}97%{opacity:.5}98%{opacity:1}}
+.ht{font-family:'Bebas Neue',sans-serif;font-size:clamp(72px,15vw,180px);line-height:.9;color:#fff;letter-spacing:-2px;position:relative}
+.ht .acc{color:#00ff41}.ht .dan{color:#ff0000}
+.ht::before,.ht::after{content:attr(data-text);position:absolute;top:0;left:0;width:100%;height:100%}
+.ht::before{color:#ff0000;animation:g1 3.5s infinite;clip-path:polygon(0 0,100% 0,100% 35%,0 35%)}
+.ht::after{color:#00ff41;animation:g2 3.5s infinite;clip-path:polygon(0 65%,100% 65%,100% 100%,0 100%)}
+@keyframes g1{0%,93%{transform:none;opacity:0}95%{transform:translate(-3px,0);opacity:.8}97%{opacity:0}}
+@keyframes g2{0%,95%{transform:none;opacity:0}97%{transform:translate(3px,0);opacity:.8}99%{opacity:0}}
+#tw{font-family:'Orbitron',monospace;font-size:clamp(13px,2.5vw,20px);color:#00ff41;margin:32px 0;min-height:56px;letter-spacing:2px}
+.cur{animation:bl .7s infinite;color:#00ff41}
+@keyframes bl{0%,100%{opacity:1}50%{opacity:0}}
+
+/* HERO COUNTERS */
+.hc{display:flex;gap:32px;flex-wrap:wrap;justify-content:center;margin:32px 0}
+.cb{border:1px solid rgba(0,255,65,.4);padding:20px 28px;text-align:center;background:rgba(0,255,65,.03);clip-path:polygon(8px 0,100% 0,100% calc(100% - 8px),calc(100% - 8px) 100%,0 100%,0 8px)}
+.cv{font-family:'Bebas Neue',sans-serif;font-size:52px;color:#00ff41;display:block;line-height:1;transition:color .15s}
+.cl{font-family:'Orbitron',monospace;font-size:10px;letter-spacing:3px;color:rgba(255,255,255,.4);text-transform:uppercase;margin-top:4px}
+.sh{position:absolute;bottom:32px;left:50%;transform:translateX(-50%);font-family:'Orbitron',monospace;font-size:10px;letter-spacing:4px;color:rgba(0,255,65,.5);animation:pd 2s infinite}
+@keyframes pd{0%,100%{opacity:.5;transform:translateX(-50%) translateY(0)}50%{opacity:1;transform:translateX(-50%) translateY(8px)}}
+
+/* SECTIONS */
+section{position:relative;z-index:10;padding:80px 40px}
+.sh2{font-family:'Orbitron',monospace;font-size:10px;letter-spacing:6px;color:#00ff41;text-transform:uppercase;margin-bottom:12px;min-height:14px}
+.st{font-family:'Bebas Neue',sans-serif;font-size:clamp(48px,8vw,96px);color:#fff;line-height:.95;margin-bottom:32px}
+.st span[data-type]{display:inline-block;min-height:1em}
+
+/* CHART */
+#cs{background:#000;border-top:1px solid rgba(0,255,65,.2)}
+.cw{position:relative;width:100%;height:500px;border:1px solid rgba(0,255,65,.3);background:rgba(0,255,65,.02)}
+
+/* STATS GRID */
+#stats{background:#000;border-top:2px solid #ff0000}
+.sg{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:2px;background:rgba(255,0,0,.07);margin:40px 0}
+.sc{background:#000;padding:28px 22px;border:1px solid rgba(255,255,255,.06);position:relative;overflow:hidden;transition:background .12s,border-color .12s;min-height:180px}
+.sy{font-family:'Orbitron',monospace;font-size:10px;letter-spacing:4px;color:rgba(255,255,255,.3);margin-bottom:8px}
+.sv{font-family:'Bebas Neue',sans-serif;font-size:60px;line-height:1;margin-bottom:4px;transition:color .1s,text-shadow .1s}
+.sd{font-family:'Orbitron',monospace;font-size:10px;color:rgba(255,255,255,.45);line-height:1.75;white-space:pre-line;min-height:52px}
+.pb{width:100%;height:2px;background:rgba(255,255,255,.07);margin-top:12px;overflow:hidden}
+.pf{height:100%;width:0%;transition:width 1.8s cubic-bezier(.22,1,.36,1)}
+
+/* CARD BLINK ANIMATIONS */
+@keyframes coff{0%{opacity:1}30%{opacity:.05}50%{opacity:.8}65%{opacity:.05}100%{opacity:0}}
+@keyframes con{0%{opacity:0;background:#001800}15%{opacity:.9;background:#002500}100%{opacity:1;background:#000}}
+.blink-off{animation:coff .32s ease forwards}
+.blink-on{animation:con .45s ease forwards}
+
+/* LIVE FEED */
+#lf{background:rgba(0,4,0,.99);border-top:1px solid rgba(0,255,65,.3);border-bottom:1px solid rgba(0,255,65,.3)}
+.fg{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:1px;background:rgba(0,255,65,.07);margin-top:28px}
+.fc{background:#000;padding:18px 14px;font-family:'Orbitron',monospace;font-size:11px}
+@keyframes fgl{0%{background:#001d00}100%{background:#000}}
+@keyframes frl{0%{background:#1a0000}100%{background:#000}}
+.fc.fg2{animation:fgl .4s ease}.fc.fr2{animation:frl .4s ease}
+.fsym{color:#fff;font-weight:700;font-size:13px;margin-bottom:5px}
+.fp{font-size:21px;font-family:'Bebas Neue',sans-serif;margin-bottom:2px}
+.fch{font-size:10px;letter-spacing:1px}
+.up{color:#00ff41}.dn{color:#ff0000}
+
+/* DUAL CHARTS */
+#gr{background:#000;border-top:1px solid rgba(0,255,65,.2)}
+.dc{display:grid;grid-template-columns:1fr 1fr;gap:2px}
+@media(max-width:768px){.dc{grid-template-columns:1fr}}
+.mw{border:1px solid rgba(0,255,65,.2);padding:24px;background:rgba(0,255,65,.01)}
+.mt{font-family:'Orbitron',monospace;font-size:11px;letter-spacing:3px;color:rgba(255,255,255,.5);margin-bottom:14px;min-height:14px}
+
+/* QUOTE */
+#qs{background:#000;padding:100px 40px;text-align:center;border-top:1px solid rgba(255,255,255,.04);position:relative;z-index:10}
+.qt{font-family:'Bebas Neue',sans-serif;font-size:clamp(32px,5.5vw,76px);line-height:1.05;color:#fff;max-width:1200px;margin:0 auto;min-height:120px}
+.qt .hl{color:#00ff41}.qt .hl2{color:#ff0000}
+.qa{font-family:'Orbitron',monospace;font-size:11px;letter-spacing:4px;color:rgba(255,255,255,.3);margin-top:28px;text-transform:uppercase;min-height:14px}
+
+/* TIMELINE */
+#tl{background:#000;border-top:1px solid rgba(255,0,0,.2)}
+.tlw{position:relative;padding:40px 0}
+.tll{position:absolute;left:50%;top:0;bottom:0;width:1px;background:linear-gradient(to bottom,transparent,#00ff41,#ff0000,transparent)}
+.tli{display:flex;margin-bottom:60px;align-items:flex-start;gap:40px}
+.tli:nth-child(even){flex-direction:row-reverse}
+.tli:nth-child(even) .tlc{text-align:right}
+.tlc{flex:1;padding:0 40px;opacity:0;transform:translateX(-20px);transition:opacity .7s ease,transform .7s ease}
+.tlc.vis{opacity:1;transform:none}
+.tly{font-family:'Bebas Neue',sans-serif;font-size:48px;color:#00ff41;line-height:1;min-height:52px}
+.tly.crash{color:#ff0000}
+.tle{font-family:'Orbitron',monospace;font-size:11px;color:rgba(255,255,255,.8);margin-top:4px;line-height:1.8;min-height:60px}
+.tlv{font-family:'Orbitron',monospace;font-size:10px;letter-spacing:3px;margin-top:8px;min-height:14px}
+.tld{width:16px;height:16px;border-radius:50%;border:2px solid #00ff41;background:#000;flex-shrink:0;margin-top:16px;box-shadow:0 0 10px rgba(0,255,65,.5);position:relative;z-index:1}
+.tld.crash{border-color:#ff0000;box-shadow:0 0 10px rgba(255,0,0,.5)}
+@media(max-width:768px){.tll{left:20px}.tli,.tli:nth-child(even){flex-direction:row}.tli:nth-child(even) .tlc{text-align:left}}
+
+/* CLOSING */
+#cl{background:#000;padding:120px 40px;text-align:center;border-top:2px solid #fff;position:relative;z-index:10}
+.ct{font-family:'Bebas Neue',sans-serif;font-size:clamp(56px,11vw,136px);line-height:.9;color:#fff}
+.ct span.grn{display:block;color:#00ff41}
+.cs2{font-family:'Orbitron',monospace;font-size:12px;letter-spacing:4px;color:rgba(255,255,255,.35);margin-top:32px;text-transform:uppercase;min-height:14px}
+
+/* BOTTOM */
+.bb{background:#000;border-top:1px solid rgba(0,255,65,.3);padding:12px 40px;display:flex;justify-content:space-between;font-family:'Orbitron',monospace;font-size:9px;color:rgba(255,255,255,.2);letter-spacing:2px;position:relative;z-index:10}
+</style>
+</head>
+<body>
+<canvas id="mc"></canvas>
+
+<div class="tw"><div class="tt" id="tk1"></div></div>
+
+<section id="hero">
+  <div class="eye" id="eyebrow"></div>
+  <h1 class="ht" data-text="THE MARKET">
+    THE<br><span class="acc">MARKET</span><br>
+    <span style="font-size:.5em;color:rgba(255,255,255,.2)">ALWAYS</span><br>
+    <span class="dan">WINS</span>
+  </h1>
+  <div id="tw2"><span class="cur">_</span></div>
+  <div class="hc">
+    <div class="cb"><span class="cv" id="c1">0</span><span class="cl">DJIA TODAY</span></div>
+    <div class="cb"><span class="cv" id="c2">0x</span><span class="cl">GROWTH SINCE 1900</span></div>
+    <div class="cb"><span class="cv" id="c3">0</span><span class="cl">S&amp;P 500</span></div>
+    <div class="cb"><span class="cv" id="c4">0</span><span class="cl">YEARS OF BULL RUNS</span></div>
+  </div>
+  <div class="sh">▼ SCROLL TO WITNESS HISTORY ▼</div>
+</section>
+
+<section id="cs">
+  <div class="sh2" data-type="■ DOW JONES INDUSTRIAL AVERAGE — 1896 TO PRESENT"></div>
+  <div class="st"><span data-type="200 YEARS"></span><br><span style="color:#00ff41" data-type="OF GROWTH"></span></div>
+  <div class="cw"><canvas id="ch1"></canvas></div>
+  <div style="display:flex;gap:32px;margin-top:14px;font-family:'Orbitron',monospace;font-size:11px">
+    <span><span style="color:#00ff41">■</span> DJIA (1896–2024)</span>
+    <span><span style="color:#ff0000">■</span> Crash Events</span>
+    <span style="color:rgba(255,255,255,.3)">LOG SCALE</span>
+  </div>
+</section>
+
+<section id="lf">
+  <div class="sh2" data-type="■ LIVE MARKET FEED — REAL-TIME SIMULATION"></div>
+  <div class="st" style="font-size:clamp(36px,5vw,64px)">
+    <span data-type="MARKETS"></span><br><span style="color:#00ff41" data-type="NEVER SLEEP"></span>
+  </div>
+  <div class="fg" id="feedg"></div>
+</section>
+
+<section id="stats">
+  <div class="sh2" data-type="■ HISTORICAL MILESTONES — LIVE BOARD"></div>
+  <div class="st">
+    <span data-type="THE"></span><br>
+    <span style="color:#ff0000" data-type="NUMBERS"></span><br>
+    <span data-type="SPEAK"></span>
+  </div>
+  <div class="sg" id="sg"></div>
+</section>
+
+<section id="gr">
+  <div class="sh2" data-type="■ COMPOUND ANNUAL GROWTH ANALYSIS"></div>
+  <div class="st"><span data-type="COMPOUNDING"></span><br><span style="color:#00ff41" data-type="IS THE 8TH WONDER"></span></div>
+  <div class="dc" style="margin-top:40px">
+    <div class="mw"><div class="mt" data-type="$1,000 INVESTED — DJIA MILESTONES"></div><div style="position:relative;height:280px"><canvas id="ch2"></canvas></div></div>
+    <div class="mw"><div class="mt" data-type="10-YEAR ROLLING RETURNS — S&P 500"></div><div style="position:relative;height:280px"><canvas id="ch3"></canvas></div></div>
+  </div>
+</section>
+
+<section id="qs">
+  <div class="sh2" style="text-align:center" data-type="■ WORDS THAT BUILT EMPIRES"></div>
+  <div id="qd" class="qt"></div>
+  <div class="qa" id="qa"></div>
+</section>
+
+<section id="tl">
+  <div class="sh2" data-type="■ THE UNSTOPPABLE TIMELINE"></div>
+  <div class="st">
+    <span data-type="EVERY"></span><br>
+    <span style="color:#ff0000" data-type="CRASH"></span><br>
+    <span data-type="A BUYING"></span><br>
+    <span style="color:#00ff41" data-type="OPPORTUNITY"></span>
+  </div>
+  <div class="tlw">
+    <div class="tll"></div>
+    <div class="tli">
+      <div class="tlc"><div class="tly" data-type="1896"></div><div class="tle" data-type="Dow Jones Industrial Average is created. Starts at 40.74 points."></div><div class="tlv up" data-type="DJIA: 40 POINTS"></div></div>
+      <div class="tld"></div><div style="flex:1"></div>
+    </div>
+    <div class="tli">
+      <div style="flex:1"></div><div class="tld crash"></div>
+      <div class="tlc"><div class="tly crash" data-type="1929"></div><div class="tle" data-type="The Great Depression crash. -89% from peak to trough. Took 25 years to recover."></div><div class="tlv dn" data-type="DJIA: 41 (FROM 381)"></div></div>
+    </div>
+    <div class="tli">
+      <div class="tlc"><div class="tly" data-type="1954"></div><div class="tle" data-type="Post-war boom reclaims 1929 highs. America becomes a superpower."></div><div class="tlv up" data-type="DJIA: 382 → NEW ALL-TIME HIGH"></div></div>
+      <div class="tld"></div><div style="flex:1"></div>
+    </div>
+    <div class="tli">
+      <div style="flex:1"></div><div class="tld crash"></div>
+      <div class="tlc"><div class="tly crash" data-type="1987"></div><div class="tle" data-type="Black Monday. -22.6% in one day. Largest single-day drop in history. Recovered in 2 years."></div><div class="tlv dn" data-type="DJIA: 1,739 (FROM 2,247)"></div></div>
+    </div>
+    <div class="tli">
+      <div class="tlc"><div class="tly" data-type="2000"></div><div class="tle" data-type="Dot-com bubble peaks. Nasdaq -78%. Internet transforms civilization forever."></div><div class="tlv up" data-type="DJIA: 10,787 PEAK"></div></div>
+      <div class="tld"></div><div style="flex:1"></div>
+    </div>
+    <div class="tli">
+      <div style="flex:1"></div><div class="tld crash"></div>
+      <div class="tlc"><div class="tly crash" data-type="2008"></div><div class="tle" data-type="Global Financial Crisis. Lehman Brothers collapses. DJIA cuts in half. Bounces back 3x."></div><div class="tlv dn" data-type="DJIA: 6,547 (FROM 14,000)"></div></div>
+    </div>
+    <div class="tli">
+      <div class="tlc"><div class="tly crash" style="color:#ff0000" data-type="2020"></div><div class="tle" data-type="COVID-19. Fastest crash: -34% in 33 days. Fastest recovery: new ATH in 5 months."></div><div class="tlv dn" data-type="DJIA: 18,591 → 29,000"></div></div>
+      <div class="tld crash"></div><div style="flex:1"></div>
+    </div>
+    <div class="tli">
+      <div style="flex:1"></div><div class="tld"></div>
+      <div class="tlc"><div class="tly" data-type="2024"></div><div class="tle" data-type="Market at all-time highs. AI revolution fuels new bull run. +59,000% since 1900. Undefeated."></div><div class="tlv up" data-type="DJIA: 39,000+ AND CLIMBING"></div></div>
+    </div>
+  </div>
+</section>
+
+<section id="cl">
+  <div class="ct">
+    <span data-type="TIME IN"></span><br>
+    <span data-type="THE MARKET"></span><br>
+    <span class="grn"><span data-type="BEATS"></span></span><br>
+    <span data-type="TIMING"></span><br>
+    <span data-type="THE MARKET"></span>
+  </div>
+  <div class="cs2" data-type="200 years · 12 recessions · 4 wars · 1 pandemic · 0 permanent crashes"></div>
+</section>
+
+<div class="tw"><div class="tt" id="tk2"></div></div>
+<div class="bb">
+  <span>MARKET DATA TERMINAL v3.0 — FOR EDUCATIONAL PURPOSES</span>
+  <span id="lt">--:--:--</span>
+  <span>NOT FINANCIAL ADVICE ■ PAST PERFORMANCE ≠ FUTURE RESULTS</span>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+// ── MATRIX RAIN ──────────────────────────────────────────────────────────────
+(function(){
+  const cv=document.getElementById('mc'),cx=cv.getContext('2d');
+  const CH='0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ$+-.%▲▼■';
+  let W,H,cols,drops;
+  function init(){W=cv.width=innerWidth;H=cv.height=innerHeight;cols=Math.floor(W/13);drops=new Array(cols).fill(1)}
+  function draw(){
+    cx.fillStyle='rgba(0,0,0,0.05)';cx.fillRect(0,0,W,H);
+    cx.font='13px Share Tech Mono,monospace';
+    for(let i=0;i<cols;i++){
+      cx.fillStyle=i%7===0?'#fff':(i%11===0?'#ff0000':'#00ff41');
+      cx.globalAlpha=Math.random()*.7+.3;
+      cx.fillText(CH[Math.floor(Math.random()*CH.length)],i*13,drops[i]*13);
+      cx.globalAlpha=1;
+      if(drops[i]*13>H&&Math.random()>.975)drops[i]=0;
+      drops[i]++;
+    }
+  }
+  init();setInterval(draw,50);addEventListener('resize',init);
+})();
+
+// ── CLOCK ─────────────────────────────────────────────────────────────────────
+setInterval(()=>{document.getElementById('lt').textContent=new Date().toLocaleTimeString('en-US',{hour12:false})+' EST';},1000);
+
+// ── HERO TYPEWRITER (cycling) ─────────────────────────────────────────────────
+const HLINES=["THE DOW JONES HAS RETURNED +59,000% SINCE 1900","EVERY SINGLE CRASH HAS BEEN TEMPORARY","$1 INVESTED IN 1900 IS WORTH $590 TODAY","THE MARKET HAS NEVER PERMANENTLY FAILED","COMPOUND INTEREST: THE EIGHTH WONDER OF THE WORLD","BUY. HOLD. DON'T LOOK. PROFIT.","TIME IN THE MARKET BEATS TIMING THE MARKET","200 YEARS OF DATA. ONE CONCLUSION: UP."];
+let hl=0,hc=0,hd=false;
+const htw=document.getElementById('tw2');
+function htype(){
+  const ln=HLINES[hl];
+  if(!hd){htw.innerHTML=ln.substring(0,hc+1)+'<span class="cur">_</span>';hc++;if(hc===ln.length){hd=true;setTimeout(htype,2400);return;}setTimeout(htype,42);}
+  else{htw.innerHTML=ln.substring(0,hc)+'<span class="cur">_</span>';hc--;if(hc<0){hd=false;hl=(hl+1)%HLINES.length;hc=0;setTimeout(htype,350);return;}setTimeout(htype,18);}
+}
+// Type hero eyebrow immediately
+(function(){const el=document.getElementById('eyebrow'),txt='■ LIVE — MARKET INTELLIGENCE TERMINAL ■';let i=0;function t(){if(i<=txt.length){el.textContent=txt.substring(0,i);i++;setTimeout(t,38);}}t();setTimeout(htype,500);})();
+
+// ── HERO COUNTERS — count from 0 on load ─────────────────────────────────────
+function countUp(elId,tgt,dur,sfx,money){
+  const el=document.getElementById(elId);el.textContent='0'+(sfx||'');
+  const t0=performance.now();
+  (function step(n){const p=Math.min((n-t0)/dur,1),e=1-Math.pow(1-p,4),v=Math.floor(e*tgt);
+    el.textContent=(money?v.toLocaleString():v)+(sfx||'');
+    if(p<1)requestAnimationFrame(step);else el.textContent=(money?tgt.toLocaleString():tgt)+(sfx||'');
+  })(t0);
+}
+countUp('c1',39127,3400,'',true);
+countUp('c2',590,3000,'x',false);
+countUp('c3',5254,3600,'',true);
+countUp('c4',128,2800,' yrs',false);
+
+// DJIA live pulse after load
+setTimeout(()=>{setInterval(()=>{
+  const el=document.getElementById('c1'),v=parseInt(el.textContent.replace(/,/g,''));
+  if(isNaN(v))return;const d=Math.floor((Math.random()-.46)*18);
+  el.textContent=(v+d).toLocaleString();el.style.color=d>=0?'#00ff41':'#ff0000';
+  el.animate([{transform:'scale(1.08)'},{transform:'scale(1)'}],{duration:160,easing:'ease-out'});
+},1600);},3500);
+
+// ── SCROLL TYPEWRITER ENGINE ──────────────────────────────────────────────────
+// Every element with data-type gets typed in when scrolled into view
+const TYPED=new Set();
+const SPEED=26; // ms per char
+
+function typeElement(el){
+  if(TYPED.has(el))return;
+  TYPED.add(el);
+  const txt=el.getAttribute('data-type');
+  if(!txt){el.style.opacity='1';return;}
+  el.textContent='';
+  let i=0;
+  (function tick(){
+    if(i<=txt.length){
+      el.textContent=txt.substring(0,i)+(i<txt.length?'▌':'');
+      i++;setTimeout(tick,SPEED+Math.random()*12);
+    } else {el.textContent=txt;}
+  })();
+}
+
+const typeObs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting)typeElement(e.target);});
+},{threshold:0.12,rootMargin:'0px 0px -30px 0px'});
+
+document.querySelectorAll('[data-type]').forEach(el=>{
+  if(el.id==='eyebrow')return; // handled above
+  typeObs.observe(el);
+});
+
+// Timeline content reveal
+const tlObs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      e.target.classList.add('vis');
+      e.target.querySelectorAll('[data-type]').forEach(c=>typeElement(c));
+    }
+  });
+},{threshold:0.15});
+document.querySelectorAll('.tlc').forEach(el=>tlObs.observe(el));
+
+// ── TICKER TAPE ───────────────────────────────────────────────────────────────
+const TKS=[
+  {s:'DJIA',v:'39,127',c:'+0.48%',u:1},{s:'S&P500',v:'5,254',c:'+0.52%',u:1},
+  {s:'NASDAQ',v:'16,384',c:'+0.71%',u:1},{s:'AAPL',v:'189.30',c:'+1.2%',u:1},
+  {s:'MSFT',v:'420.55',c:'+0.8%',u:1},{s:'NVDA',v:'879.44',c:'+2.1%',u:1},
+  {s:'GOOGL',v:'160.44',c:'+0.3%',u:1},{s:'AMZN',v:'181.22',c:'+1.4%',u:1},
+  {s:'META',v:'515.26',c:'+0.6%',u:1},{s:'TSLA',v:'172.63',c:'-0.9%',u:0},
+  {s:'JPM',v:'198.44',c:'+0.5%',u:1},{s:'BRK.B',v:'406.12',c:'+0.2%',u:1},
+  {s:'V',v:'273.55',c:'+0.4%',u:1},{s:'XOM',v:'119.88',c:'-0.2%',u:0},
+];
+function buildTk(id){const el=document.getElementById(id);let h='';for(let r=0;r<2;r++)TKS.forEach(t=>{h+=`<span class="ti"><span class="ts">${t.s}</span><span class="tv">${t.v}</span><span class="tc ${t.u?'up':'dn'}">${t.c}</span></span>`;});el.innerHTML=h;}
+buildTk('tk1');buildTk('tk2');
+
+// ── LIVE FEED ─────────────────────────────────────────────────────────────────
+const FS=[
+  {s:'DJIA',b:39127},{s:'S&P500',b:5254},{s:'NASDAQ',b:16384},
+  {s:'AAPL',b:189.3},{s:'MSFT',b:420.5},{s:'GOOGL',b:160.4},
+  {s:'AMZN',b:181.2},{s:'NVDA',b:879.4},{s:'META',b:515.2},
+  {s:'TSLA',b:172.6},{s:'JPM',b:198.4},{s:'V',b:273.5},
+  {s:'BRK.B',b:406.1},{s:'WMT',b:60.2},{s:'XOM',b:119.8},
+  {s:'UNH',b:487.2},{s:'JNJ',b:162.8},{s:'PG',b:161.4},{s:'MA',b:468.3},{s:'HD',b:355.7},
+];
+const FD={};FS.forEach(s=>FD[s.s]={p:s.b,b:s.b});
+const feedg=document.getElementById('feedg');
+feedg.innerHTML=FS.map(s=>{const id='f'+s.s.replace(/[^a-z0-9]/gi,'_');return `<div class="fc" id="${id}"><div class="fsym">${s.s}</div><div class="fp up" id="${id}p">0.00</div><div class="fch up" id="${id}c">▲ 0.00%</div></div>`;}).join('');
+
+// Count feed from 0 on scroll in
+let feedDone=false;
+const feedObs=new IntersectionObserver(entries=>{
+  if(entries[0].isIntersecting&&!feedDone){feedDone=true;feedObs.disconnect();
+    FS.forEach((s,idx)=>setTimeout(()=>{
+      const id='f'+s.s.replace(/[^a-z0-9]/gi,'_');const pel=document.getElementById(id+'p');if(!pel)return;
+      const t0=performance.now();const dur=1000+idx*55;
+      (function step(n){const p=Math.min((n-t0)/dur,1),e=1-Math.pow(1-p,3),v=e*s.b;
+        pel.textContent=v.toFixed(2);if(p<1)requestAnimationFrame(step);else pel.textContent=FD[s.s].p.toFixed(2);
+      })(t0);
+    },idx*35));
+  }
+},{threshold:0.1});
+feedObs.observe(feedg);
+
+setInterval(()=>{
+  const sym=FS[Math.floor(Math.random()*FS.length)].s;
+  const d=FD[sym];const delta=(Math.random()-.45)*d.b*.003;
+  d.p=Math.max(d.p+delta,.1);
+  const pct=((d.p-d.b)/d.b)*100;
+  const id='f'+sym.replace(/[^a-z0-9]/gi,'_');
+  const card=document.getElementById(id),pel=document.getElementById(id+'p'),cel=document.getElementById(id+'c');
+  if(!card||!pel)return;const up=delta>=0;
+  pel.textContent=d.p.toFixed(2);pel.className='fp '+(up?'up':'dn');
+  cel.textContent=(up?'▲ ':'▼ ')+Math.abs(pct).toFixed(2)+'%';cel.className='fch '+(up?'up':'dn');
+  card.classList.remove('fg2','fr2');void card.offsetWidth;card.classList.add(up?'fg2':'fr2');
+},170);
+
+// ── STATS GRID ────────────────────────────────────────────────────────────────
+const SDATA=[
+  {yr:'1900',tgt:66,   sfx:'',  neg:false,desc:'DJIA at dawn of century.\nA new age of industry begins.',bw:0.17},
+  {yr:'1929',tgt:89,   sfx:'%', neg:true, desc:'The Great Crash.\nMarket fell from 381 to 41.\nIt came back stronger.',bw:89},
+  {yr:'1954',tgt:382,  sfx:'',  neg:false,desc:'Post-war boom reclaims 1929.\n25 years later. Every crash recovers.',bw:1},
+  {yr:'1987',tgt:22,   sfx:'%', neg:true, desc:'Black Monday.\nLargest single-day crash.\nFully recovered in 2 years.',bw:22},
+  {yr:'2000',tgt:10787,sfx:'',  neg:false,desc:'Dot-com peak.\nInternet changes everything.\nCorrections are temporary.',bw:27},
+  {yr:'2008',tgt:54,   sfx:'%', neg:true, desc:'Global Financial Crisis.\nLehman collapses.\nMarket tripled afterward.',bw:54},
+  {yr:'2020',tgt:34,   sfx:'%', neg:true, desc:'COVID-19 Crash.\nFastest crash in history.\nFastest recovery too.',bw:34},
+  {yr:'2024',tgt:39000,sfx:'+', neg:false,desc:'New all-time highs.\n59,000% growth since 1900.\nThe ascent continues.',bw:100},
+];
+const LV=SDATA.map(d=>({c:d.tgt,b:d.tgt}));
+const DONE=new Array(SDATA.length).fill(false);
+const VIS=new Array(SDATA.length).fill(true);
+
+document.getElementById('sg').innerHTML=SDATA.map((d,i)=>`
+<div class="sc" id="sc${i}">
+  <div class="sy">${d.yr}</div>
+  <div class="sv" id="sv${i}" style="color:${d.neg?'#ff0000':'#00ff41'};text-shadow:0 0 20px ${d.neg?'rgba(255,0,0,.4)':'rgba(0,255,65,.4)'}">0${d.sfx}</div>
+  <div class="sd">${d.desc}</div>
+  <div class="pb"><div class="pf" id="pf${i}" style="background:linear-gradient(90deg,${d.neg?'#ff0000,#880000':'#00ff41,#00cc33'})"></div></div>
+</div>`).join('');
+
+function countCard(i){
+  const d=SDATA[i],vel=document.getElementById('sv'+i),bel=document.getElementById('pf'+i);
+  const t0=performance.now(),dur=1600+i*100,pfx=d.neg?'-':'';
+  (function step(n){const p=Math.min((n-t0)/dur,1),e=1-Math.pow(1-p,3),v=Math.floor(e*d.tgt);
+    vel.textContent=pfx+v.toLocaleString()+d.sfx;bel.style.width=(e*d.bw)+'%';
+    if(p<1)requestAnimationFrame(step);else{vel.textContent=pfx+d.tgt.toLocaleString()+d.sfx;bel.style.width=d.bw+'%';}
+  })(t0);
+}
+
+const cObs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{const i=parseInt(e.target.id.replace('sc',''));if(e.isIntersecting&&!isNaN(i)&&!DONE[i]){DONE[i]=true;setTimeout(()=>countCard(i),i*80);}});
+},{threshold:0.2});
+SDATA.forEach((_,i)=>{const el=document.getElementById('sc'+i);if(el)cObs.observe(el);});
+
+// Live twitch every 200ms
+setInterval(()=>{
+  const i=Math.floor(Math.random()*SDATA.length);
+  if(!DONE[i]||!VIS[i])return;
+  const d=SDATA[i],lv=LV[i],vel=document.getElementById('sv'+i),card=document.getElementById('sc'+i),bel=document.getElementById('pf'+i);
+  if(!vel||!card)return;
+  const delta=(Math.random()-.45)*lv.b*.005;lv.c=Math.max(lv.c+delta,.1);
+  const up=delta>=0,pfx=d.neg?'-':'';
+  vel.textContent=pfx+Math.round(lv.c).toLocaleString()+d.sfx;
+  vel.style.color=up?'#00ff41':'#ff0000';
+  vel.style.textShadow=up?'0 0 24px rgba(0,255,65,.65)':'0 0 24px rgba(255,0,0,.65)';
+  card.style.borderColor=up?'rgba(0,255,65,.5)':'rgba(255,0,0,.5)';
+  card.style.background=up?'rgba(0,255,65,.035)':'rgba(255,0,0,.035)';
+  if(bel)bel.style.background=up?'linear-gradient(90deg,#00ff41,#00cc33)':'linear-gradient(90deg,#ff0000,#880000)';
+  vel.animate([{transform:'scale(1.1)'},{transform:'scale(1)'}],{duration:170,easing:'ease-out'});
+  if(Math.random()<.05)card.animate([{background:up?'rgba(0,255,65,.14)':'rgba(255,0,0,.14)'},{background:''}],{duration:380});
+},200);
+
+// SWITCH ON / OFF — cards blink out and scramble back in
+setInterval(()=>{
+  const i=Math.floor(Math.random()*SDATA.length);
+  if(!DONE[i]||!VIS[i])return;
+  const card=document.getElementById('sc'+i);if(!card)return;
+  VIS[i]=false;
+  card.classList.remove('blink-on');card.classList.add('blink-off');
+  const offDur=320+Math.random()*600;
+  setTimeout(()=>{
+    // Scramble numbers during off phase
+    const vel=document.getElementById('sv'+i);
+    if(vel){
+      const d=SDATA[i];let sc=6;
+      const iv=setInterval(()=>{
+        vel.textContent=(d.neg?'-':'')+Math.floor(Math.random()*d.tgt*2).toLocaleString()+d.sfx;
+        vel.style.color=['#00ff41','#ff0000','#ffffff','#ff0000','#00ff41'][Math.floor(Math.random()*5)];
+        if(--sc<=0){clearInterval(iv);vel.textContent=(d.neg?'-':'')+Math.round(LV[i].c).toLocaleString()+d.sfx;}
+      },55);
+    }
+    card.classList.remove('blink-off');card.classList.add('blink-on');
+    VIS[i]=true;
+  },offDur);
+},1100+Math.random()*400);
+
+// ── CHARTS ────────────────────────────────────────────────────────────────────
+const djia={
+  lb:['1896','1900','1910','1920','1929','1932','1940','1950','1960','1970','1980','1987','1990','2000','2003','2008','2009','2010','2015','2020','2024'],
+  vl:[40,66,81,108,381,41,148,235,615,809,963,1739,2753,10787,7286,8776,6547,11578,17425,23345,39127],
+  cr:[0,0,0,0,1,1,0,0,0,0,0,1,0,0,0,1,1,0,0,1,0]
+};
+new Chart(document.getElementById('ch1'),{type:'line',data:{labels:djia.lb,datasets:[{label:'DJIA',data:djia.vl,borderColor:'#00ff41',backgroundColor:'rgba(0,255,65,.05)',borderWidth:2,fill:true,tension:.4,pointBackgroundColor:djia.vl.map((_,i)=>djia.cr[i]?'#ff0000':'#00ff41'),pointBorderColor:djia.vl.map((_,i)=>djia.cr[i]?'#ff0000':'#00ff41'),pointRadius:djia.vl.map((_,i)=>djia.cr[i]?8:4)}]},options:{responsive:true,maintainAspectRatio:false,scales:{y:{type:'logarithmic',grid:{color:'rgba(0,255,65,.07)'},ticks:{color:'rgba(0,255,65,.7)',font:{size:10},callback:v=>v>=1000?v.toLocaleString():v}},x:{grid:{color:'rgba(255,255,255,.04)'},ticks:{color:'rgba(255,255,255,.4)',font:{size:10}}}},plugins:{legend:{display:false},tooltip:{backgroundColor:'#000',borderColor:'#00ff41',borderWidth:1,titleColor:'#00ff41',bodyColor:'#fff',callbacks:{label:c=>'DJIA: '+c.raw.toLocaleString()}}},animation:{duration:2500,easing:'easeInOutQuart'}}});
+new Chart(document.getElementById('ch2'),{type:'bar',data:{labels:['$1K 1900','$1K 1950','$1K 1980','$1K 2000','$1K 2010'],datasets:[{data:[590000,166000,40600,3630,3380],backgroundColor:['rgba(0,255,65,.7)','rgba(0,255,65,.6)','rgba(0,255,65,.5)','rgba(0,200,50,.4)','rgba(0,180,40,.35)'],borderColor:'#00ff41',borderWidth:1}]},options:{responsive:true,maintainAspectRatio:false,scales:{y:{type:'logarithmic',grid:{color:'rgba(0,255,65,.07)'},ticks:{color:'rgba(0,255,65,.6)',font:{size:9},callback:v=>v>=1000?'$'+v.toLocaleString():'$'+v}},x:{grid:{display:false},ticks:{color:'rgba(255,255,255,.4)',font:{size:9}}}},plugins:{legend:{display:false},tooltip:{backgroundColor:'#000',borderColor:'#00ff41',borderWidth:1,titleColor:'#00ff41',bodyColor:'#fff',callbacks:{label:c=>'$'+c.raw.toLocaleString()}}},animation:{duration:2000}}});
+const ret=[-.9,12.4,8.2,-2.8,10.1,16.5,5.4,-.9,13.5,18.2,14.1,7.2,3.8,17.5,12.3,10.8,15.2,9.4,13.7,11.2];
+new Chart(document.getElementById('ch3'),{type:'bar',data:{labels:['1940','1945','1950','1955','1960','1965','1970','1975','1980','1985','1990','1995','2000','2005','2010','2012','2015','2018','2020','2022'],datasets:[{data:ret,backgroundColor:ret.map(v=>v>=0?'rgba(0,255,65,.6)':'rgba(255,0,0,.6)'),borderColor:ret.map(v=>v>=0?'#00ff41':'#ff0000'),borderWidth:1}]},options:{responsive:true,maintainAspectRatio:false,scales:{y:{grid:{color:'rgba(0,255,65,.05)'},ticks:{color:'rgba(255,255,255,.4)',font:{size:9},callback:v=>v+'%'}},x:{grid:{display:false},ticks:{color:'rgba(255,255,255,.35)',font:{size:9},maxRotation:45}}},plugins:{legend:{display:false},tooltip:{backgroundColor:'#000',borderColor:'#00ff41',borderWidth:1,titleColor:'#00ff41',bodyColor:'#fff'}},animation:{duration:2000}}});
+
+// ── QUOTE ROTATOR (typed) ─────────────────────────────────────────────────────
+const QS=[
+  {t:'THE STOCK MARKET IS A DEVICE FOR TRANSFERRING MONEY FROM THE IMPATIENT TO THE PATIENT',a:'— WARREN BUFFETT'},
+  {t:"IN THE SHORT RUN THE MARKET IS A VOTING MACHINE. IN THE LONG RUN IT IS A WEIGHING MACHINE.",a:'— BENJAMIN GRAHAM'},
+  {t:"THE FOUR MOST DANGEROUS WORDS: THIS TIME IT'S DIFFERENT",a:'— SIR JOHN TEMPLETON'},
+  {t:'THE BEST TIME TO PLANT A TREE WAS 20 YEARS AGO. THE SECOND BEST TIME IS NOW.',a:'— CHINESE PROVERB'},
+  {t:'COMPOUND INTEREST IS THE EIGHTH WONDER OF THE WORLD. HE WHO UNDERSTANDS IT EARNS IT.',a:'— EINSTEIN (ATTRIBUTED)'},
+];
+let qi=0;const qdel=document.getElementById('qd'),qael=document.getElementById('qa');
+function typeQ(){
+  const q=QS[qi];qdel.textContent='';qael.textContent='';
+  const hls=['PATIENT','LONG','EARNS','WEIGHING'];const hls2=['IMPATIENT','VOTING','DANGEROUS','DIFFERENT'];
+  let ci=0;
+  (function tick(){
+    if(ci<=q.t.length){
+      qdel.textContent=q.t.substring(0,ci)+(ci<q.t.length?'▌':'');ci++;setTimeout(tick,20+Math.random()*10);
+    } else {
+      qdel.innerHTML=q.t.split(' ').map(w=>{
+        if(hls.some(h=>w.includes(h)))return`<span class="hl">${w}</span>`;
+        if(hls2.some(h=>w.includes(h)))return`<span class="hl2">${w}</span>`;
+        return w;
+      }).join(' ');
+      let ai=0;(function atk(){if(ai<=q.a.length){qael.textContent=q.a.substring(0,ai);ai++;setTimeout(atk,38);}})();
+    }
+  })();
+}
+const qObs=new IntersectionObserver(e=>{if(e[0].isIntersecting){qObs.disconnect();typeQ();setInterval(()=>{qi=(qi+1)%QS.length;typeQ();},7500);}},{threshold:.3});
+qObs.observe(document.getElementById('qs'));
+</script>
+</body>
+</html>
